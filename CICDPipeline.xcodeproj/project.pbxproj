@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C765879E2DE6EDF000AA4F2B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C765879D2DE6EDF000AA4F2B /* FirebaseCrashlytics */; };
+		C76587A12DE6EE4100AA4F2B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C76587A02DE6EE4100AA4F2B /* FirebaseAnalytics */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		C765877B2DE6E68900AA4F2B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C76587A12DE6EE4100AA4F2B /* FirebaseAnalytics in Frameworks */,
+				C765879E2DE6EDF000AA4F2B /* FirebaseCrashlytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +85,7 @@
 				C765876F2DE6E68600AA4F2B /* CICDPipeline */,
 				C765877D2DE6E68900AA4F2B /* CICDPipelineTests */,
 				C76587872DE6E68900AA4F2B /* CICDPipelineUITests */,
+				C765879F2DE6EE4100AA4F2B /* Frameworks */,
 				C765876E2DE6E68600AA4F2B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +98,13 @@
 				C76587842DE6E68900AA4F2B /* CICDPipelineUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C765879F2DE6EE4100AA4F2B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,6 +127,8 @@
 			);
 			name = CICDPipeline;
 			packageProductDependencies = (
+				C765879D2DE6EDF000AA4F2B /* FirebaseCrashlytics */,
+				C76587A02DE6EE4100AA4F2B /* FirebaseAnalytics */,
 			);
 			productName = CICDPipeline;
 			productReference = C765876D2DE6E68600AA4F2B /* CICDPipeline.app */;
@@ -195,6 +212,9 @@
 			);
 			mainGroup = C76587642DE6E68600AA4F2B;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C765879C2DE6EDF000AA4F2B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C765876E2DE6E68600AA4F2B /* Products */;
 			projectDirPath = "";
@@ -409,8 +429,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.innominds.cicdsetup.CICDPipeline;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.innominds.cicdsetup;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -437,8 +457,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.innominds.cicdsetup.CICDPipeline;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.innominds.cicdsetup;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -558,6 +578,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C765879C2DE6EDF000AA4F2B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.13.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C765879D2DE6EDF000AA4F2B /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C765879C2DE6EDF000AA4F2B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		C76587A02DE6EE4100AA4F2B /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C765879C2DE6EDF000AA4F2B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C76587652DE6E68600AA4F2B /* Project object */;
 }
