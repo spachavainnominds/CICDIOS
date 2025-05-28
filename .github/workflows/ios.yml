@@ -43,8 +43,8 @@ jobs:
       - name: Extract current iOS build number
         id: ios_version
         run: |
-          build_number=$(/usr/libexec/PlistBuddy -c "Print CURRENT_PROJECT_VERSION" "${{ steps.plist_path.outputs.plist_path }}")
-          echo "build_number=$build_number" >> $GITHUB_OUTPUT
+          build_number=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "${{ steps.plist_path.outputs.plist_path }}")
+        echo "build_number=$build_number" >> $GITHUB_OUTPUT
 
       - name: Find previous build number commit
         id: last_ios_build_commit
