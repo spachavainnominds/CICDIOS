@@ -34,21 +34,40 @@ jobs:
       - name: Install Dependencies
         run: bundle install || true
 
-      - name: Detect Xcode project name and set Info.plist path
+      - name: Locate actual Info.plist path
         id: plist_path
         run: |
-            project_path=$(find . -name "*.xcodeproj" -print -quit)
-            app_name=$(basename "$project_path" .xcodeproj)
-            plist_path="$app_name/SupportingFiles/Info.plist"
-            echo "plist_path=$plist_path" >> $GITHUB_OUTPUT
-            echo "Detected plist path: $plist_path"
-            cat "$plist_path"
-            if [ -f "$plist_path" ]; then
-                cat "$plist_path"
+            # Search for the actual Info.plist used in the project (exclude Pods and other irrelevant paths)
+            plist=$(find . -name "Info.plist" \
+              -not -path "*/Pods/*" \
+              -not -path "*/Tests/*" \
+              -not -path "*/PreviewContent/*" \
+              | grep -m 1 "Info.plist")
+
+            if [ -f "$plist" ]; then
+              echo "plist_path=$plist" >> $GITHUB_OUTPUT
+              echo "✅ Found Info.plist at: $plist"
+              cat "$plist"
             else
-                echo "❌ Info.plist not found at: $plist_path"
-            exit 1
+              echo "❌ No Info.plist file found in project!"
+              exit 1
             fi
+            
+#      - name: Detect Xcode project name and set Info.plist path
+#        id: plist_path
+#        run: |
+#            project_path=$(find . -name "*.xcodeproj" -print -quit)
+#            app_name=$(basename "$project_path" .xcodeproj)
+#            plist_path="$app_name/SupportingFiles/Info.plist"
+#            echo "plist_path=$plist_path" >> $GITHUB_OUTPUT
+#            echo "Detected plist path: $plist_path"
+#            cat "$plist_path"
+#            if [ -f "$plist_path" ]; then
+#                cat "$plist_path"
+#            else
+#                echo "❌ Info.plist not found at: $plist_path"
+#            exit 1
+#            fi
 
       - name: Print Info.plist contents
         run: |
