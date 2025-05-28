@@ -42,8 +42,13 @@ jobs:
             plist_path="$app_name/SupportingFiles/Info.plist"
             echo "plist_path=$plist_path" >> $GITHUB_OUTPUT
             echo "Detected plist path: $plist_path"
-            cat "plist_path"
-            cat "${plist_path}"
+            cat "$plist_path"
+            if [ -f "$plist_path" ]; then
+                cat "$plist_path"
+            else
+                echo "❌ Info.plist not found at: $plist_path"
+            exit 1
+        fi
 
       - name: Print Info.plist contents
         run: |
