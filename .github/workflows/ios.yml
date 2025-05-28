@@ -37,20 +37,21 @@ jobs:
       - name: Locate Info.plist
         id: plist_path
         run: |
-          plist=$(find ${{ steps.detect_project.outputs.project_path }} -name "Info.plist" | head -n 1)
-          echo "plist_path=$plist" >> $GITHUB_OUTPUT
+            plist=$(find . -name "Info.plist" | head -n 1)
+            echo "plist_path=$plist" >> $GITHUB_OUTPUT
+            cat "$plist"  # Optional: View contents for debugging
 
       - name: Extract current iOS build number
         id: ios_version
         run: |
-          build_number=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "${{ steps.plist_path.outputs.plist_path }}")
-          echo "build_number=$build_number" >> $GITHUB_OUTPUT
+              build_number=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "${{ steps.plist_path.outputs.plist_path }}")
+              echo "build_number=$build_number" >> $GITHUB_OUTPUT
 
       - name: Find previous build number commit
         id: last_ios_build_commit
         run: |
-          last_commit=$(git log -G'CURRENT_PROJECT_VERSION' -n 1 --pretty=format:"%H" -- "${{ steps.plist_path.outputs.plist_path }}")
-          echo "last_commit=$last_commit" >> $GITHUB_OUTPUT
+              last_commit=$(git log -G'CURRENT_PROJECT_VERSION' -n 1 --pretty=format:"%H" -- "${{ steps.plist_path.outputs.plist_path }}")
+              echo "last_commit=$last_commit" >> $GITHUB_OUTPUT
 
       - name: Generate iOS release notes
         id: ios_release_notes
