@@ -34,17 +34,19 @@ jobs:
       - name: Install Dependencies
         run: bundle install || true
 
-      - name: Locate Info.plist
-        id: plist_path
-        run: |
-            plist=$(find . -name "Info.plist" | head -n 1)
-            echo "plist_path=$plist" >> $GITHUB_OUTPUT
-            cat "$plist"  # Optional: View contents for debugging
+      - name: Detect Xcode project name and set Info.plist path
+      id: plist_path
+      run: |
+            project_path=$(find . -name "*.xcodeproj" -print -quit)
+            app_name=$(basename "$project_path" .xcodeproj)
+            plist_path="$app_name/SupportingFiles/Info.plist"
+            echo "plist_path=$plist_path" >> $GITHUB_OUTPUT
+            echo "Detected plist path: $plist_path"
 
       - name: Extract current iOS build number
         id: ios_version
         run: |
-              build_number=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "${{ steps.plist_path.outputs.plist_path }}/SupportingFiles/")
+              build_number=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "${{ steps.plist_path.outputs.plist_path }}")
               echo "build_number=$build_number" >> $GITHUB_OUTPUT
 
       - name: Find previous build number commit
