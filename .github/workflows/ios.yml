@@ -18,6 +18,10 @@ jobs:
         with:
           ruby-version: 3.1
 
+      - name: Add GoogleService-Info.plist
+        run: |
+            echo "${{ secrets.IOS_FIREBASE_PLIST }}" | base64 --decode > ios/YourApp/GoogleService-Info.plist
+    
       - name: Install Fastlane
         run: gem install fastlane
 
@@ -69,7 +73,7 @@ jobs:
      - name: Distribute iOS build to Firebase
        run: |
         firebase appdistribution:distribute path/to/your.ipa \
-          --app "YOUR_IOS_FIREBASE_APP_ID" \
+          --app 1:470633239225:android:b824ef32dc5daacf9dc168" \
           --release-notes "$IOS_RELEASE_NOTES" \
           --groups "testers"
       env:
