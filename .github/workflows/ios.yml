@@ -48,7 +48,7 @@ jobs:
             else
                 echo "❌ Info.plist not found at: $plist_path"
             exit 1
-        fi
+            fi
 
       - name: Print Info.plist contents
         run: |
