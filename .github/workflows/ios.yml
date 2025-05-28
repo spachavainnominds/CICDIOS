@@ -35,8 +35,8 @@ jobs:
         run: bundle install || true
 
       - name: Detect Xcode project name and set Info.plist path
-      id: plist_path
-      run: |
+        id: plist_path
+        run: |
             project_path=$(find . -name "*.xcodeproj" -print -quit)
             app_name=$(basename "$project_path" .xcodeproj)
             plist_path="$app_name/SupportingFiles/Info.plist"
