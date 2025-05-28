@@ -42,7 +42,13 @@ jobs:
             plist_path="$app_name/SupportingFiles/Info.plist"
             echo "plist_path=$plist_path" >> $GITHUB_OUTPUT
             echo "Detected plist path: $plist_path"
+            cat "plist_path"
+            cat "${plist_path}"
 
+      - name: Print Info.plist contents
+        run: |
+            cat "${plist_path}"
+    
       - name: Extract current iOS build number
         id: ios_version
         run: |
