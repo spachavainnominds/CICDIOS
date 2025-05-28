@@ -18,9 +18,15 @@ jobs:
         with:
           ruby-version: 3.1
 
+      - name: Detect Xcode project directory
+        id: detect_project
+        run: |
+          project_path=$(find . -name "*.xcodeproj" -print -quit | xargs dirname)
+          echo "project_path=${project_path#./}" >> $GITHUB_OUTPUT
+
       - name: Add GoogleService-Info.plist
         run: |
-          echo "${{ secrets.IOS_FIREBASE_PLIST }}" | base64 --decode > ios/YourApp/GoogleService-Info.plist
+          echo "${{ secrets.IOS_FIREBASE_PLIST }}" | base64 --decode > "${{ steps.detect_project.outputs.project_path }}/GoogleService-Info.plist"
 
       - name: Install Fastlane
         run: gem install fastlane
@@ -28,13 +34,7 @@ jobs:
       - name: Install Dependencies
         run: bundle install || true
 
-      - name: Detect Xcode project directory
-        id: detect_project
-        run: |
-          project_path=$(find . -name "*.xcodeproj" -print -quit | xargs dirname)
-          echo "project_path=${project_path#./}" >> $GITHUB_OUTPUT
-
-      - name: Locate Info.plist
+       - name: Locate Info.plist
         id: plist_path
         run: |
           plist=$(find ${{ steps.detect_project.outputs.project_path }} -name "Info.plist" | head -n 1)
