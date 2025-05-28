@@ -34,7 +34,7 @@ jobs:
       - name: Install Dependencies
         run: bundle install || true
 
-       - name: Locate Info.plist
+      - name: Locate Info.plist
         id: plist_path
         run: |
           plist=$(find ${{ steps.detect_project.outputs.project_path }} -name "Info.plist" | head -n 1)
