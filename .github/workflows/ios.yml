@@ -34,24 +34,34 @@ jobs:
       - name: Install Dependencies
         run: bundle install || true
 
-      - name: Locate actual Info.plist path
+      - name: Set Info.plist path manually (fallback)
         id: plist_path
         run: |
-            # Search for the actual Info.plist used in the project (exclude Pods and other irrelevant paths)
-            plist=$(find . -name "Info.plist" \
-              -not -path "*/Pods/*" \
-              -not -path "*/Tests/*" \
-              -not -path "*/PreviewContent/*" \
-              | grep -m 1 "Info.plist")
-
-            if [ -f "$plist" ]; then
-              echo "plist_path=$plist" >> $GITHUB_OUTPUT
-              echo "✅ Found Info.plist at: $plist"
-              cat "$plist"
-            else
-              echo "❌ No Info.plist file found in project!"
-              exit 1
-            fi
+            project_path=$(find . -name "*.xcodeproj" -print -quit)
+            app_name=$(basename "$project_path" .xcodeproj)
+            plist_path="$app_name/Resources/Info.plist"
+            echo "plist_path=$plist_path" >> $GITHUB_OUTPUT
+            echo "✅ Set fallback Info.plist path to: $plist_path"
+            cat $plist_path
+            
+#      - name: Locate actual Info.plist path
+#        id: plist_path
+#        run: |
+#            # Search for the actual Info.plist used in the project (exclude Pods and other irrelevant paths)
+#            plist=$(find . -name "Info.plist" \
+#              -not -path "*/Pods/*" \
+#              -not -path "*/Tests/*" \
+#              -not -path "*/PreviewContent/*" \
+#              | grep -m 1 "Info.plist")
+#
+#            if [ -f "$plist" ]; then
+#              echo "plist_path=$plist" >> $GITHUB_OUTPUT
+#              echo "✅ Found Info.plist at: $plist"
+#              cat "$plist"
+#            else
+#              echo "❌ No Info.plist file found in project!"
+#              exit 1
+#            fi
             
 #      - name: Detect Xcode project name and set Info.plist path
 #        id: plist_path
